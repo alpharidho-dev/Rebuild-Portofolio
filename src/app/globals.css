@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono",
+    "Courier New", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background-color: #050505;
+  color: #e5e5e5;
+}
+
+::selection {
+  background: #fafafa;
+  color: #0a0a0a;
+}
+
+/* --- slim monochrome scrollbar ------------------------------------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #262626 #0a0a0a;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 999px;
+  border: 2px solid #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f3f;
+}
+
+/* --- binary rain animations ---------------------------------------- */
+@keyframes binary-flicker {
+  0%,
+  100% {
+    opacity: var(--o, 0.4);
+  }
+  50% {
+    opacity: calc(var(--o, 0.4) * 0.22);
+  }
+}
+
+@keyframes binary-drift {
+  0%,
+  100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+.binary-flicker {
+  animation: binary-flicker var(--dur, 5s) ease-in-out var(--delay, 0s) infinite;
+}
+
+.binary-drift {
+  animation: binary-drift var(--dur, 11s) ease-in-out var(--delay, 0s) infinite;
+}
+
+/* white digits on the light About canvas get a soft glow */
+.digit-light {
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.45);
+}
+
+/* terminal cursor blink */
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: cursor-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .binary-flicker,
+  .binary-drift,
+  .animate-blink {
+    animation: none;
+  }
+}
