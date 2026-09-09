@@ -93,6 +93,10 @@ body {
   animation: marquee var(--marquee-dur, 32s) linear infinite;
 }
 
+.animate-marquee-reverse {
+  animation: marquee var(--marquee-dur, 32s) linear infinite reverse;
+}
+
 /* terminal cursor blink */
 @keyframes cursor-blink {
   0%,
@@ -116,7 +120,8 @@ body {
   .binary-flicker,
   .binary-drift,
   .animate-blink,
-  .animate-marquee {
+  .animate-marquee,
+  .animate-marquee-reverse {
     animation: none;
   }
 }

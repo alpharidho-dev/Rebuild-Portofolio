@@ -1,63 +1,62 @@
-import { Code2, Cpu, Wrench } from "lucide-react";
-import type { ComponentType } from "react";
 import { skills } from "@/config/skills";
-import { Reveal } from "@/components/Reveal";
 import { TechIcon } from "@/components/TechIcon";
-import type { TechCategory } from "@/types/content";
+import { cn } from "@/lib/utils";
+import type { TechItem } from "@/types/content";
 
 /* ------------------------------------------------------------------ */
-/* SkillsGrid — grid grup per kategori (Skills / Frameworks / Tools). */
-/* Tiap item kartu dengan logo brand asli via TechIcon.               */
+/* SkillsGrid — marquee ganda: baris 1 jalan ke kiri (skills +        */
+/* frameworks), baris 2 jalan ke kanan (tools). Pause saat hover,      */
+/* reduced-motion → grid statis.                                       */
 /* ------------------------------------------------------------------ */
 
-const CATEGORIES: {
-  key: TechCategory;
-  label: string;
-  Icon: ComponentType<{ className?: string }>;
-}[] = [
-  { key: "skills", label: "Skills", Icon: Code2 },
-  { key: "frameworks", label: "Frameworks", Icon: Cpu },
-  { key: "tools", label: "Tools", Icon: Wrench },
-];
+function TechCard({ item }: { item: TechItem }) {
+  return (
+    <div className="flex shrink-0 items-center gap-3 rounded-xl border border-neutral-800 bg-[#121212] px-4 py-3 transition-colors duration-300 hover:border-neutral-600">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-neutral-700/70 bg-[#0d0d0d] text-neutral-200">
+        <TechIcon name={item.name} className="h-5 w-5" />
+      </span>
+      <span className="block whitespace-nowrap text-sm text-neutral-200">
+        {item.name}
+      </span>
+    </div>
+  );
+}
+
+function MarqueeRow({
+  items,
+  reverse = false,
+}: {
+  items: TechItem[];
+  reverse?: boolean;
+}) {
+  const cards = items.map((s) => <TechCard key={s.name} item={s} />);
+
+  return (
+    <div className="overflow-hidden motion-reduce:overflow-visible">
+      {/* marquee: pause on hover; reduced-motion → wrap statis */}
+      <div
+        className={cn(
+          "flex w-max gap-4 hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center",
+          reverse ? "animate-marquee-reverse" : "animate-marquee",
+        )}
+      >
+        {cards}
+        <div aria-hidden="true" className="flex gap-4 motion-reduce:hidden">
+          {cards}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function SkillsGrid() {
+  const rowLeft = skills.filter((s) => s.category !== "tools");
+  const rowRight = skills.filter((s) => s.category === "tools");
+
   return (
-    <div className="grid gap-8 md:grid-cols-3">
-      {CATEGORIES.map(({ key, label, Icon }) => {
-        const items = skills.filter((s) => s.category === key);
-        return (
-          <div key={key}>
-            <h3 className="flex items-center gap-2 text-sm font-bold text-white">
-              <span className="flex h-6 w-6 items-center justify-center rounded-md border border-neutral-700/70 bg-[#0d0d0d] text-neutral-400">
-                <Icon className="h-3.5 w-3.5" />
-              </span>
-              {label}
-              <span className="text-[10px] font-normal text-neutral-600">
-                [{items.length}]
-              </span>
-            </h3>
-            <div className="mt-4 flex flex-col gap-2">
-              {items.map((s, i) => (
-                <Reveal key={s.name} delay={i * 0.04}>
-                  <div className="group flex items-center gap-3 rounded-lg border border-neutral-800 bg-[#121212] px-3.5 py-2.5 transition-all duration-300 hover:border-neutral-600 hover:bg-[#161616]">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-neutral-700/70 bg-[#0d0d0d] text-neutral-300 transition-colors duration-300 group-hover:text-white">
-                      <TechIcon name={s.name} className="h-5 w-5" />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm text-neutral-200">
-                        {s.name}
-                      </span>
-                      <span className="block text-[10px] text-neutral-500">
-                        {s.note}
-                      </span>
-                    </span>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        );
-      })}
+    <div className="space-y-4">
+      <MarqueeRow items={rowLeft} />
+      <MarqueeRow items={rowRight} reverse />
     </div>
   );
 }

@@ -224,7 +224,7 @@ function CertCard({ cert }: { cert: Certificate }) {
       href={cert.credentialUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex w-64 shrink-0 flex-col rounded-xl border border-neutral-800 bg-[#121212] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-neutral-600 hover:bg-[#161616]"
+      className="group flex h-full flex-col rounded-xl border border-neutral-800 bg-[#121212] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-neutral-600 hover:bg-[#161616]"
     >
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-1.5 text-[10px] text-neutral-500 transition-colors duration-300 group-hover:text-neutral-300">
@@ -243,7 +243,6 @@ function CertCard({ cert }: { cert: Certificate }) {
 
 export function CertificatesSection() {
   const certs = getFeaturedCertificates();
-  const items = certs.map((c) => <CertCard key={c.slug} cert={c} />);
 
   return (
     <section id="certificates" className={SECTION_WRAP}>
@@ -252,17 +251,12 @@ export function CertificatesSection() {
         title="Sertifikat"
         hint={`[${certs.length}]`}
       />
-      <div className="mt-10 overflow-hidden motion-reduce:overflow-visible">
-        {/* marquee: pause on hover; reduced-motion → grid statis */}
-        <div className="animate-marquee flex w-max gap-4 hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center">
-          {items}
-          <div
-            aria-hidden="true"
-            className="flex gap-4 motion-reduce:hidden"
-          >
-            {items}
-          </div>
-        </div>
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {certs.map((c, i) => (
+          <Reveal key={c.slug} delay={(i % 3) * 0.06} className="h-full">
+            <CertCard cert={c} />
+          </Reveal>
+        ))}
       </div>
     </section>
   );
