@@ -32,8 +32,9 @@ const ITEMS: NavItem[] = [
 
 // --- Props untuk Sidebar (sudah kamu buat, sekarang kita pakai) ---
 interface Props {
-  expanded: boolean;   // true = sidebar terbuka lebar
-  collapsed: boolean;  // true = sidebar menyempit (opsional)
+  active?: string;
+  expanded?: boolean;
+  collapsed?: boolean;
 }
 
 // --- Komponen NavList (yang tadinya kosong, sekarang diisi) ---
@@ -66,7 +67,7 @@ function NavList() {
 }
 
 // --- KOMPONEN UTAMA SIDEBAR ---
-export function Sidebar({ expanded, collapsed }: Props) {
+export function Sidebar({ active, expanded = false, collapsed = false }: Props) {
   // Tentukan lebar berdasarkan props
   const width = expanded ? 200 : 56; // 56px = w-14, 200px = expanded
 
