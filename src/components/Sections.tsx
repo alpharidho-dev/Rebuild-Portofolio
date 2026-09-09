@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Copy, Mail } from "lucide-react";
+import { ArrowUpRight, Award, Check, Copy, Mail } from "lucide-react";
 import { useState, type ComponentType } from "react";
 import { Reveal } from "@/components/Reveal";
 import { GithubIcon, InstagramIcon } from "@/components/icons";
@@ -224,10 +224,13 @@ function CertCard({ cert }: { cert: Certificate }) {
       href={cert.credentialUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex w-64 shrink-0 flex-col rounded-xl border border-neutral-800 bg-[#121212] p-5 transition-colors duration-300 hover:border-neutral-600"
+      className="group flex w-64 shrink-0 flex-col rounded-xl border border-neutral-800 bg-[#121212] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-neutral-600 hover:bg-[#161616]"
     >
       <div className="flex items-center justify-between">
-        <span className="text-[10px] text-neutral-600">{cert.issuer}</span>
+        <span className="flex items-center gap-1.5 text-[10px] text-neutral-500 transition-colors duration-300 group-hover:text-neutral-300">
+          <Award className="h-3.5 w-3.5 text-neutral-500 transition-colors duration-300 group-hover:text-white" />
+          {cert.issuer}
+        </span>
         <ArrowUpRight className="h-3.5 w-3.5 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
       </div>
       <p className="mt-3 text-sm font-semibold leading-snug text-white">

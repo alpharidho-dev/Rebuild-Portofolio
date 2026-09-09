@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/Hero";
-import { SectionNav } from "@/components/SectionNav";
 import {
   AboutSection,
   CertificatesSection,
@@ -20,7 +19,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <SectionNav />
       <AboutSection />
       <StackSection />
       <ProjectsSection />

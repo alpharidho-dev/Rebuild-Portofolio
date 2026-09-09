@@ -1,0 +1,94 @@
+import {
+  siApachekafka,
+  siClickhouse,
+  siDocker,
+  siGit,
+  siGraphql,
+  siHtml5,
+  siJavascript,
+  siJsonwebtokens,
+  siMysql,
+  siNextdotjs,
+  siNodedotjs,
+  siPostgresql,
+  siReact,
+  siRedis,
+  siTailwindcss,
+  siTurborepo,
+  siTypescript,
+  siVitest,
+} from "simple-icons";
+import { Cloud, Code2, type LucideIcon } from "lucide-react";
+
+/* ------------------------------------------------------------------ */
+/* TechIcon — logo brand asli per teknologi (via simple-icons).        */
+/* Map key harus sama persis dengan nama di config/skills.ts dan       */
+/* config/projects.ts (field techStack). Yang nggak ada di map         */
+/* (mis. WebSocket, CLI) tidak dirender icon, kecuali fallback=true.   */
+/* ------------------------------------------------------------------ */
+
+type IconSource = string | LucideIcon;
+
+const TECH_ICONS: Record<string, IconSource> = {
+  "Next.js": siNextdotjs.path,
+  React: siReact.path,
+  "Tailwind CSS": siTailwindcss.path,
+  TypeScript: siTypescript.path,
+  JavaScript: siJavascript.path,
+  "HTML/CSS": siHtml5.path,
+  "Node.js": siNodedotjs.path,
+  PostgreSQL: siPostgresql.path,
+  Postgres: siPostgresql.path,
+  MySQL: siMysql.path,
+  GraphQL: siGraphql.path,
+  Redis: siRedis.path,
+  Docker: siDocker.path,
+  Git: siGit.path,
+  Vitest: siVitest.path,
+  Kafka: siApachekafka.path,
+  ClickHouse: siClickhouse.path,
+  Turborepo: siTurborepo.path,
+  JWT: siJsonwebtokens.path,
+  AWS: Cloud, // icon AWS sudah dihapus dari simple-icons
+};
+
+export function hasTechIcon(name: string): boolean {
+  return name in TECH_ICONS;
+}
+
+function BrandIcon({ path, className }: { path: string; className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d={path} />
+    </svg>
+  );
+}
+
+export function TechIcon({
+  name,
+  className,
+  fallback = false,
+}: {
+  name: string;
+  className?: string;
+  fallback?: boolean;
+}) {
+  const source = TECH_ICONS[name];
+
+  if (typeof source === "string") {
+    return <BrandIcon path={source} className={className} />;
+  }
+
+  if (source) {
+    const Lucide = source;
+    return <Lucide className={className} />;
+  }
+
+  if (fallback) return <Code2 className={className} />;
+  return null;
+}

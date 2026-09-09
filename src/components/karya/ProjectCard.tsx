@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { TechIcon } from "@/components/TechIcon";
 import type { Project } from "@/types/content";
 
 /**
@@ -41,8 +42,9 @@ export function ProjectCard({
             {project.techStack.map((t) => (
               <span
                 key={t}
-                className="rounded border border-neutral-700/80 px-2 py-0.5 text-[10px] text-neutral-400"
+                className="flex items-center gap-1.5 rounded border border-neutral-700/80 px-2 py-0.5 text-[10px] text-neutral-400"
               >
+                <TechIcon name={t} className="h-3 w-3" />
                 {t}
               </span>
             ))}
