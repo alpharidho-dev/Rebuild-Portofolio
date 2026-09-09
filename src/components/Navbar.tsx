@@ -61,12 +61,14 @@ export function Navbar() {
             whileTap={{ scale: 0.96 }}
             className="rounded-md bg-white"
           >
-            <Link
-              href="/#about"
+            {/* <a> biasa, bukan Link — cross-page hash Link (/#hash) memicu
+                error "Router action dispatched before initialization" di Next 16 */}
+            <a
+              href="/#connect"
               className="block rounded-md px-4 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-neutral-300"
             >
               Connect
-            </Link>
+            </a>
           </motion.div>
         </div>
       </motion.nav>

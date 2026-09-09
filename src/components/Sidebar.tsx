@@ -44,20 +44,27 @@ function NavList() {
     <div className="flex flex-col items-center gap-1 py-4">
       {ITEMS.map((item) => {
         const isActive = pathname === item.href;
+        const cls = cn(
+          "relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
+          isActive
+            ? "bg-neutral-700 text-white"
+            : "text-neutral-400 hover:bg-neutral-800 hover:text-white"
+        );
+
+        // Link + hash lintas halaman (mis. /#connect) memicu error
+        // "Router action dispatched before initialization" di Next 16 —
+        // pakai <a> biasa biar full navigation + native anchor scroll.
+        if (item.href.includes("#")) {
+          return (
+            <a key={item.href} href={item.href} title={item.label} className={cls}>
+              <item.Icon className="h-5 w-5" />
+            </a>
+          );
+        }
+
         return (
-          <Link
-            key={item.href}
-            href={item.href}
-            title={item.label}
-            className={cn(
-              "relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
-              isActive
-                ? "bg-neutral-700 text-white"
-                : "text-neutral-400 hover:bg-neutral-800 hover:text-white"
-            )}
-          >
+          <Link key={item.href} href={item.href} title={item.label} className={cls}>
             <item.Icon className="h-5 w-5" />
-            {/* Jika sidebar expanded, tampilkan label di samping (opsional) */}
           </Link>
         );
       })}

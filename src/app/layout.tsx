@@ -47,7 +47,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className="bg-[#050505] font-mono text-neutral-200 antialiased">
         <script
           type="application/ld+json"
