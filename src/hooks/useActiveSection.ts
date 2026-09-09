@@ -37,8 +37,21 @@ export function useActiveSection(
       { rootMargin: "-40% 0px -52% 0px", threshold: 0 },
     );
 
+    // Bottom-of-page fix: kalau sudah mentok di bawah, section terakhir
+    // yang jujur aktif (observer doang bisa "bohong" di section akhir).
+    const onScroll = () => {
+      const doc = document.documentElement;
+      if (window.innerHeight + window.scrollY >= doc.scrollHeight - 8) {
+        setActive(ids[ids.length - 1]);
+      }
+    };
+
     elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [ids, defaultId]);
 
   return active;

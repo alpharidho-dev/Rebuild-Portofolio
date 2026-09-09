@@ -79,6 +79,20 @@ body {
   text-shadow: 0 1px 10px rgba(255, 255, 255, 0.45);
 }
 
+/* --- marquee (certificates) ---------------------------------------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-dur, 32s) linear infinite;
+}
+
 /* terminal cursor blink */
 @keyframes cursor-blink {
   0%,
@@ -101,7 +115,8 @@ body {
 
   .binary-flicker,
   .binary-drift,
-  .animate-blink {
+  .animate-blink,
+  .animate-marquee {
     animation: none;
   }
 }

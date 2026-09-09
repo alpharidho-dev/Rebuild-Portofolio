@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/Hero";
+import { SectionNav } from "@/components/SectionNav";
+import {
+  AboutSection,
+  CertificatesSection,
+  ContactSection,
+  Footer,
+  ProjectsSection,
+  StackSection,
+} from "@/components/Sections";
 
 export const metadata: Metadata = {
   title: "Alpharidho — Dev_Root · Senior Architect",
@@ -8,5 +17,16 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <SectionNav />
+      <AboutSection />
+      <StackSection />
+      <ProjectsSection />
+      <CertificatesSection />
+      <ContactSection />
+      <Footer />
+    </>
+  );
 }
