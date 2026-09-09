@@ -9,9 +9,7 @@ import { GithubIcon, InstagramIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/karya/ProjectCard";
 import { SkillsGrid } from "@/components/skills/SkillsGrid";
 import { siteConfig } from "@/config/site";
-import { getFeaturedCertificates } from "@/lib/data/certificates";
-import { getFeaturedProjects } from "@/lib/data/projects";
-import type { Certificate } from "@/types/content";
+import type { Certificate, Project } from "@/types/content";
 
 /* ------------------------------------------------------------------ */
 /* shared bits                                                         */
@@ -187,17 +185,16 @@ export function StackSection() {
 /* S4 — selected work                                                  */
 /* ------------------------------------------------------------------ */
 
-export function ProjectsSection() {
-  const featured = getFeaturedProjects();
+export function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
     <section id="work" className={SECTION_WRAP}>
       <SectionHeader
         index="03 · selected work"
         title="Karya"
-        hint={`[${featured.length} featured]`}
+        hint={`[${projects.length} featured]`}
       />
       <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {featured.map((p, i) => (
+        {projects.map((p, i) => (
           <ProjectCard key={p.slug} project={p} index={i} />
         ))}
       </div>
@@ -241,18 +238,20 @@ function CertCard({ cert }: { cert: Certificate }) {
   );
 }
 
-export function CertificatesSection() {
-  const certs = getFeaturedCertificates();
-
+export function CertificatesSection({
+  certificates,
+}: {
+  certificates: Certificate[];
+}) {
   return (
     <section id="certificates" className={SECTION_WRAP}>
       <SectionHeader
         index="04 · credentials"
         title="Sertifikat"
-        hint={`[${certs.length}]`}
+        hint={`[${certificates.length}]`}
       />
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {certs.map((c, i) => (
+        {certificates.map((c, i) => (
           <Reveal key={c.slug} delay={(i % 3) * 0.06} className="h-full">
             <CertCard cert={c} />
           </Reveal>

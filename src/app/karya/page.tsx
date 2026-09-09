@@ -10,8 +10,11 @@ export const metadata: Metadata = {
     "All published projects by Alpharidho — case studies, tech stacks and repo links.",
 };
 
-export default function KaryaPage() {
-  const projects = getPublishedProjects();
+// ISR 1 jam (PRD): data dari Supabase, kalau down saji cache lama
+export const revalidate = 3600;
+
+export default async function KaryaPage() {
+  const projects = await getPublishedProjects();
 
   return (
     <div className="relative min-h-screen overflow-hidden">

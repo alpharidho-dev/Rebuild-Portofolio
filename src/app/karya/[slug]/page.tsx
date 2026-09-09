@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { BinaryRain } from "@/components/BinaryRain";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
+import { TechIcon } from "@/components/TechIcon";
 import {
   getAllProjectSlugs,
   getProjectBySlug,
@@ -12,13 +13,17 @@ import {
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return getAllProjectSlugs().map((slug) => ({ slug }));
+// ISR 1 jam (PRD)
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const slugs = await getAllProjectSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) return { title: "Not Found" };
 
   return {
@@ -34,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   // draft / slug nggak dikenal = 404 (PRD: status draft = 404)
   if (!project) notFound();
@@ -72,8 +77,9 @@ export default async function ProjectPage({ params }: Props) {
             {project.techStack.map((t) => (
               <span
                 key={t}
-                className="rounded border border-neutral-700/80 px-2 py-0.5 text-[10px] text-neutral-400"
+                className="flex items-center gap-1.5 rounded border border-neutral-700/80 px-2 py-0.5 text-[10px] text-neutral-400"
               >
+                <TechIcon name={t} className="h-3 w-3" />
                 {t}
               </span>
             ))}

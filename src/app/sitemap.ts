@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllProjectSlugs } from "@/lib/data/projects";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://alpharidho.dev";
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/statistics`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
   ];
 
-  const projectRoutes: MetadataRoute.Sitemap = getAllProjectSlugs().map(
+  const projectRoutes: MetadataRoute.Sitemap = (await getAllProjectSlugs()).map(
     (slug) => ({
       url: `${base}/karya/${slug}`,
       lastModified: new Date(),

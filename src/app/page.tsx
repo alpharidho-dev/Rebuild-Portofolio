@@ -8,6 +8,8 @@ import {
   ProjectsSection,
   StackSection,
 } from "@/components/Sections";
+import { getFeaturedCertificates } from "@/lib/data/certificates";
+import { getFeaturedProjects } from "@/lib/data/projects";
 
 export const metadata: Metadata = {
   title: "Alpharidho — Dev_Root · Senior Architect",
@@ -15,14 +17,22 @@ export const metadata: Metadata = {
     "Monochrome developer portfolio of Alpharidho. Home of the binary rain.",
 };
 
-export default function Home() {
+// ISR 1 jam (PRD): data dari Supabase, kalau down saji cache lama
+export const revalidate = 3600;
+
+export default async function Home() {
+  const [featuredProjects, featuredCertificates] = await Promise.all([
+    getFeaturedProjects(),
+    getFeaturedCertificates(),
+  ]);
+
   return (
     <>
       <Hero />
       <AboutSection />
       <StackSection />
-      <ProjectsSection />
-      <CertificatesSection />
+      <ProjectsSection projects={featuredProjects} />
+      <CertificatesSection certificates={featuredCertificates} />
       <ContactSection />
       <Footer />
     </>
