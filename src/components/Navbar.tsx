@@ -2,13 +2,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Radio, Terminal } from "lucide-react";
 import { EASE_OUT } from "@/components/Reveal";
-
-const LINKS = [
-  { label: "About", href: "/about" },
-  { label: "Statistics", href: "/statistics" },
-  { label: "Tech", href: "/tech" },
-  { label: "Another", href: "/another" },
-];
+import { mainNav } from "@/config/navigation";
 
 export function Navbar() { 
   return (
@@ -27,7 +21,7 @@ export function Navbar() {
         </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 md:flex">
-          {LINKS.map((link) => (
+          {mainNav.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -42,7 +36,7 @@ export function Navbar() {
           <motion.a
             href="https://github.com/alpharidho-dev"
             target="_blank"
-            rel="noopnoopener noreferrer"
+            rel="noopener noreferrer"
             aria-label="Terminal"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.92 }}

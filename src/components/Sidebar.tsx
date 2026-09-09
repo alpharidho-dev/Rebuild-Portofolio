@@ -25,9 +25,9 @@ const ITEMS: NavItem[] = [
   { href: "/", label: "Home", Icon: Home },
   { href: "/about", label: "About", Icon: UserRound },
   { href: "/lab", label: "Lab", Icon: FlaskConical },
-  { href: "/stack", label: "Stack", Icon: Layers },
-  { href: "/contact", label: "Contact", Icon: Mail },
-  { href: "/settings", label: "Settings", Icon: Settings },
+  { href: "/karya", label: "Karya", Icon: Layers },
+  { href: "/#connect", label: "Connect", Icon: Mail },
+  { href: "/statistics", label: "Stats", Icon: Settings },
 ];
 
 // --- Props untuk Sidebar (sudah kamu buat, sekarang kita pakai) ---
