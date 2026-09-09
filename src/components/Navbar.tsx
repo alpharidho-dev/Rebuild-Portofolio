@@ -63,6 +63,7 @@ export function Navbar() {
           >
             {/* <a> biasa, bukan Link — cross-page hash Link (/#hash) memicu
                 error "Router action dispatched before initialization" di Next 16 */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/#connect"
               className="block rounded-md px-4 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-neutral-300"
