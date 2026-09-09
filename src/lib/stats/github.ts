@@ -13,6 +13,28 @@ const GH = "https://api.github.com";
 const USERNAME = process.env.GITHUB_USERNAME || "alpharidho-dev";
 const TOKEN = process.env.GITHUB_TOKEN || undefined;
 
+/* Tipe minimal dari response GitHub REST/GraphQL yang kita pakai. */
+interface GithubProfile {
+  login: string;
+  name: string | null;
+  avatar_url: string;
+  created_at: string;
+  followers: number;
+  public_repos: number;
+}
+
+interface GithubRepo {
+  name: string;
+  stargazers_count: number;
+  language: string | null;
+  html_url: string;
+  description: string | null;
+}
+
+interface GithubEvent {
+  created_at: string;
+}
+
 export interface Repo {
   name: string;
   stars: number;
@@ -90,7 +112,7 @@ function headers(): Record<string, string> {
   };
 }
 
-async function getJson(path: string, signal: AbortSignal): Promise<any> {
+async function getJson<T>(path: string, signal: AbortSignal): Promise<T> {
   const res = await fetch(`${GH}${path}`, { headers: headers(), signal });
   if (!res.ok) throw new Error(`github ${res.status}`);
   return res.json();
@@ -120,11 +142,11 @@ export async function getGithubStats(): Promise<GithubData> {
   try {
     const signal = AbortSignal.timeout(6000);
     const [profile, repos] = await Promise.all([
-      getJson(`/users/${USERNAME}`, signal),
-      getJson(`/users/${USERNAME}/repos?per_page=100&sort=pushed`, signal),
+      getJson<GithubProfile>(`/users/${USERNAME}`, signal),
+      getJson<GithubRepo[]>(`/users/${USERNAME}/repos?per_page=100&sort=pushed`, signal),
     ]);
 
-    const repoList: Repo[] = (Array.isArray(repos) ? repos : []).map((r: any) => ({
+    const repoList: Repo[] = (Array.isArray(repos) ? repos : []).map((r) => ({
       name: r.name ?? "",
       stars: r.stargazers_count ?? 0,
       language: r.language ?? null,
@@ -165,17 +187,34 @@ export async function getGithubStats(): Promise<GithubData> {
           body: JSON.stringify({ query: q }),
           signal,
         });
-        const cal = (await r.json())?.data?.user?.contributionsCollection
-          ?.contributionCalendar;
+        const body = (await r.json()) as {
+          data?: {
+            user?: {
+              contributionsCollection?: {
+                contributionCalendar?: {
+                  totalContributions?: number;
+                  weeks?: Array<{
+                    contributionDays?: Array<{
+                      date?: string;
+                      contributionCount?: number;
+                    }>;
+                  }>;
+                };
+              };
+            };
+          };
+        };
+        const cal =
+          body?.data?.user?.contributionsCollection?.contributionCalendar;
         if (cal) {
           contributionsYear = cal.totalContributions ?? 0;
           contributionsLabel = "contributions · 1y";
-          activity = (cal.weeks as any[]).slice(-12).map((w) => {
+          activity = (cal.weeks ?? []).slice(-12).map((w) => {
             const firstDate: string | undefined = w.contributionDays?.[0]?.date;
             const d = firstDate ? new Date(firstDate) : new Date();
             return {
               label: `${d.getDate()}/${d.getMonth() + 1}`,
-              count: (w.contributionDays as any[]).reduce(
+              count: (w.contributionDays ?? []).reduce(
                 (s, day) => s + (day.contributionCount ?? 0),
                 0,
               ),
@@ -188,7 +227,7 @@ export async function getGithubStats(): Promise<GithubData> {
     }
 
     if (contributionsLabel !== "contributions · 1y") {
-      const events: any[] = await getJson(
+      const events: GithubEvent[] = await getJson<GithubEvent[]>(
         `/users/${USERNAME}/events/public?per_page=100`,
         signal,
       ).catch(() => []);

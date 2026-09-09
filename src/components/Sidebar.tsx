@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Cpu,
   FlaskConical,
   Home,
   Layers,
@@ -67,7 +66,7 @@ function NavList() {
 }
 
 // --- KOMPONEN UTAMA SIDEBAR ---
-export function Sidebar({ active, expanded = false, collapsed = false }: Props) {
+export function Sidebar({ expanded = false }: Props) {
   // Tentukan lebar berdasarkan props
   const width = expanded ? 200 : 56; // 56px = w-14, 200px = expanded
 

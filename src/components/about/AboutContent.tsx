@@ -279,8 +279,6 @@ function TtyCard() {
   // 0 = analyzing (boleh diulang)
   // 1 = compiling, 2 = deploying, 3 = STATUS (harus berurutan)
   const [phase, setPhase] = useState(0);
-  // Counter untuk berapa kali analyzing sudah muncul di siklus ini
-  const [analyzingCount, setAnalyzingCount] = useState(0);
 
   useEffect(() => {
     if (reduced) return;
@@ -294,12 +292,10 @@ function TtyCard() {
           if (Math.random() < 0.6) {
             // Muncul analyzing lagi
             newLine = LOG_LINES[0];
-            setAnalyzingCount((c) => c + 1);
           } else {
             // Lanjut ke compiling
             newLine = LOG_LINES[1];
             setPhase(1);
-            setAnalyzingCount(0);
           }
         } else if (phase === 1) {
           // Compiling → wajib lanjut ke deploying
@@ -314,7 +310,6 @@ function TtyCard() {
           // Kembali ke analyzing untuk siklus baru
           newLine = LOG_LINES[0];
           setPhase(0);
-          setAnalyzingCount(0);
         }
 
         // Tambahkan di akhir, buang yang paling atas agar tetap 4 baris

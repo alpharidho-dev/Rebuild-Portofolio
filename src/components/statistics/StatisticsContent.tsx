@@ -63,11 +63,7 @@ function CountUp({
   const [txt, setTxt] = useState("0");
 
   useEffect(() => {
-    if (!inView) return;
-    if (reduced) {
-      setTxt(value.toFixed(decimals));
-      return;
-    }
+    if (!inView || reduced) return;
     const controls = animate(0, value, {
       duration: 1.4,
       ease: "easeOut",
@@ -76,9 +72,12 @@ function CountUp({
     return () => controls.stop();
   }, [inView, reduced, value, decimals]);
 
+  // reduced-motion / belum di viewport → tampilkan nilai akhir langsung
+  const displayed = !inView ? "0" : reduced ? value.toFixed(decimals) : txt;
+
   return (
     <span ref={ref} className={className}>
-      {txt}
+      {displayed}
     </span>
   );
 }

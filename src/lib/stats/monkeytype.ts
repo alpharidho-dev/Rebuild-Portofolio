@@ -51,7 +51,34 @@ const DEMO: MonkeytypeData = {
   })),
 };
 
-async function getJson(path: string, signal: AbortSignal): Promise<any> {
+/* Tipe minimal response API MonkeyType. */
+interface MtStatsRaw {
+  data?: { timeTyping?: number; completedTests?: number };
+}
+
+interface MtPbsRaw {
+  data?: { time?: Record<string, unknown> };
+}
+
+interface MtResultsRaw {
+  data?: unknown;
+}
+
+interface MtPbRaw {
+  wpm?: unknown;
+  raw?: unknown;
+  acc?: unknown;
+  consistency?: unknown;
+}
+
+interface MtResultRaw {
+  wpm?: unknown;
+  acc?: unknown;
+  mode2?: unknown;
+  timestamp?: unknown;
+}
+
+async function getJson<T>(path: string, signal: AbortSignal): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     headers: { Authorization: `ApeKey ${APE_KEY}` },
     signal,
@@ -61,17 +88,18 @@ async function getJson(path: string, signal: AbortSignal): Promise<any> {
 }
 
 /** Ambil entry dengan wpm tertinggi dari array personal bests. */
-function bestOf(list: any): PbEntry | null {
+function bestOf(list: unknown): PbEntry | null {
   if (!Array.isArray(list) || list.length === 0) return null;
   let best: PbEntry | null = null;
-  for (const e of list) {
-    if (typeof e?.wpm !== "number") continue;
+  for (const raw of list) {
+    const e = raw as MtPbRaw;
+    if (typeof e.wpm !== "number") continue;
     if (!best || e.wpm > best.wpm) {
       best = {
         wpm: e.wpm,
-        raw: e.raw ?? 0,
-        acc: e.acc ?? 0,
-        consistency: e.consistency ?? 0,
+        raw: typeof e.raw === "number" ? e.raw : 0,
+        acc: typeof e.acc === "number" ? e.acc : 0,
+        consistency: typeof e.consistency === "number" ? e.consistency : 0,
       };
     }
   }
@@ -82,22 +110,30 @@ export async function getMonkeytypeStats(): Promise<MonkeytypeData> {
   try {
     const signal = AbortSignal.timeout(6000);
     const [stats, pbs, results] = await Promise.all([
-      getJson("/users/stats", signal).catch(() => null),
-      getJson("/users/personalBests?mode=time", signal).catch(() => null),
-      getJson("/results?limit=10", signal).catch(() => null),
+      getJson<MtStatsRaw>("/users/stats", signal).catch(() => null),
+      getJson<MtPbsRaw>("/users/personalBests?mode=time", signal).catch(() => null),
+      getJson<MtResultsRaw>("/results?limit=10", signal).catch(() => null),
     ]);
     if (!stats && !pbs && !results) return DEMO;
 
     // shape response: data = { "15": [...], "30": [...], "60": [...] }
-    const time = pbs?.data?.time ?? pbs?.data ?? {};
-    const recentRaw: any[] = Array.isArray(results?.data) ? results.data : [];
+    const time = (pbs?.data?.time ?? pbs?.data ?? {}) as Record<
+      string,
+      unknown
+    >;
+    const recentRaw: unknown[] = Array.isArray(results?.data)
+      ? (results.data as unknown[])
+      : [];
     const recent: RecentTest[] = recentRaw
-      .map((r) => ({
-        wpm: typeof r?.wpm === "number" ? r.wpm : 0,
-        acc: typeof r?.acc === "number" ? r.acc : 0,
-        mode2: String(r?.mode2 ?? ""),
-        ts: typeof r?.timestamp === "number" ? r.timestamp : 0,
-      }))
+      .map((raw) => {
+        const r = raw as MtResultRaw;
+        return {
+          wpm: typeof r.wpm === "number" ? r.wpm : 0,
+          acc: typeof r.acc === "number" ? r.acc : 0,
+          mode2: String(r.mode2 ?? ""),
+          ts: typeof r.timestamp === "number" ? r.timestamp : 0,
+        };
+      })
       .reverse(); // urut kronologis buat chart
 
     const best = {
