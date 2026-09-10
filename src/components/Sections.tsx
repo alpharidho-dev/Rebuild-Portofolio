@@ -34,7 +34,7 @@ function SectionHeader({
             {title}
           </h2>
         </div>
-        <span className="text-xs text-neutral-600">{hint}</span>
+        <span className="text-xs text-neutral-500">{hint}</span>
       </div>
     </Reveal>
   );
