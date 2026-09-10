@@ -178,7 +178,7 @@ const STRIPS = [
 
 function PhotoCollage() {
   return (
-    <div className="shrink-0 pt-20 pr-30 ">
+    <div className="shrink-0 pt-10">
       {/* mobile: single full photo */}
       <div className="relative h-80 overflow-hidden rounded-xl border border-neutral-700/60 md:hidden">
         <Image
@@ -222,7 +222,7 @@ function PhotoCollage() {
 
 export function TerminalAbout() {
   return (
-    <div className="flex flex-col gap-10 lg:flex-row lg:items-start">
+    <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-14">
       <PhotoCollage />
       <div className="min-w-0 flex-1">
         <CodeEditor />
