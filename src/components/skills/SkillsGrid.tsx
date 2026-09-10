@@ -11,12 +11,17 @@ import type { TechItem } from "@/types/content";
 
 function TechCard({ item }: { item: TechItem }) {
   return (
-    <div className="flex shrink-0 items-center gap-3 rounded-xl border border-neutral-800 bg-[#121212] px-5 py-4 transition-colors duration-300 hover:border-neutral-600">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-700/70 bg-[#0d0d0d] text-neutral-200">
-        <TechIcon name={item.name} className="h-5 w-5" />
+    <div className="flex shrink-0 items-center gap-4 rounded-2xl border border-neutral-800 bg-[#121212] px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-neutral-600 hover:bg-[#161616]">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-neutral-700/70 bg-[#0d0d0d] text-neutral-200">
+        <TechIcon name={item.name} className="h-6 w-6" />
       </span>
-      <span className="block whitespace-nowrap text-sm text-neutral-200">
-        {item.name}
+      <span className="block leading-tight">
+        <span className="block whitespace-nowrap text-sm font-medium text-neutral-100">
+          {item.name}
+        </span>
+        <span className="block text-[10px] text-neutral-500">
+          {item.note}
+        </span>
       </span>
     </div>
   );
@@ -32,7 +37,7 @@ function MarqueeRow({
   const cards = items.map((s) => <TechCard key={s.name} item={s} />);
 
   return (
-    <div className="overflow-hidden motion-reduce:overflow-visible">
+    <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:overflow-visible motion-reduce:[mask-image:none]">
       {/* marquee: pause on hover; reduced-motion → wrap statis */}
       <div
         className={cn(
@@ -49,17 +54,34 @@ function MarqueeRow({
   );
 }
 
+function MarqueeGroup({
+  label,
+  items,
+  reverse = false,
+}: {
+  label: string;
+  items: TechItem[];
+  reverse?: boolean;
+}) {
+  return (
+    <div className="space-y-4">
+      <p className="text-xs text-neutral-500">{`// ${label}`}</p>
+      <MarqueeRow items={items} reverse={reverse} />
+    </div>
+  );
+}
+
 export function SkillsGrid() {
   const rowSkills = skills.filter((s) => s.category === "skills");
   const rowFrameworks = skills.filter((s) => s.category === "frameworks");
   const rowTools = skills.filter((s) => s.category === "tools");
 
   return (
-    /* baris marquee mengisi sisa tinggi section biar penuh 1 layar */
-    <div className="flex flex-1 flex-col justify-between gap-6">
-      <MarqueeRow items={rowSkills} />
-      <MarqueeRow items={rowFrameworks} reverse />
-      <MarqueeRow items={rowTools} />
+    /* 3 grup marquee tersebar merata mengisi tinggi section */
+    <div className="flex flex-1 flex-col justify-evenly gap-8">
+      <MarqueeGroup label="languages & core" items={rowSkills} />
+      <MarqueeGroup label="frameworks & ui" items={rowFrameworks} reverse />
+      <MarqueeGroup label="tools & infra" items={rowTools} />
     </div>
   );
 }
