@@ -7,7 +7,9 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  /* tiap section home = satu layar penuh, snap biar nggak ada
+     potongan section yang kelihatan saat scroll */
+  scroll-snap-type: y mandatory;
 }
 
 body {
