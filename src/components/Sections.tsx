@@ -53,7 +53,7 @@ function SectionHeader({
 /* padding nyambung sama halaman sub-route (about/lab/stats) */
 /* section = satu layar penuh + snap-start, konten di tengah vertikal */
 const SECTION_WRAP =
-  "relative flex min-h-svh flex-col justify-center px-5 py-24 snap-start md:pl-[240px] md:pr-10";
+  "relative flex min-h-svh flex-col justify-center px-5 py-24 snap-start md:pl-[255px] md:pr-10";
 
 const SOCIAL_ICONS: Record<string, ComponentType<{ className?: string }>> = {
   GitHub: GithubIcon,
