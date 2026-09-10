@@ -129,7 +129,8 @@ export function StackSection() {
         title="Stack"
         hint="[grouped]"
       />
-      <div className="mt-10">
+      {/* isi section mengisi sisa tinggi layar biar marquee penuh, bukan ketengah */}
+      <div className="mt-10 flex min-h-0 flex-1 flex-col">
         <SkillsGrid />
       </div>
     </section>
