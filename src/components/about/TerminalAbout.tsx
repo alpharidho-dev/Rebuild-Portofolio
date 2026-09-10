@@ -171,14 +171,14 @@ function CodeEditor() {
 /* ------------------------------------------------------------------ */
 
 const STRIPS = [
-  { src: "/images/about-1.png", w: 85, h: 400, top: 80, border: "border-0" },
+  { src: "/images/about-1.png", w: 85, h: 400, top: 0, border: "border-0" },
   { src: "/images/about-2.png", w: 82, h: 492, top: 0, border: "border-0" },
-  { src: "/images/about-3.png", w: 82, h: 444, top: 70, border: "border-0" },
+  { src: "/images/about-3.png", w: 82, h: 444, top: 0, border: "border-0" },
 ];
 
 function PhotoCollage() {
   return (
-    <div className="shrink-0 pt-10">
+    <div className="shrink-0">
       {/* mobile: single full photo */}
       <div className="relative h-80 overflow-hidden rounded-xl border border-neutral-700/60 md:hidden">
         <Image
