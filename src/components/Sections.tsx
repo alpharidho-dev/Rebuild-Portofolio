@@ -2,9 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Award, Check, Copy, Mail } from "lucide-react";
-import { useState, type ComponentType } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Award,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  Mail,
+} from "lucide-react";
+import { useEffect, useState, type ComponentType } from "react";
+import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/Reveal";
 import { TerminalAbout } from "@/components/about/TerminalAbout";
 import { GithubIcon, InstagramIcon } from "@/components/icons";
@@ -213,6 +222,117 @@ function CertCard({ cert }: { cert: Certificate }) {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* S5 — certificates carousel (auto-rotate, pause on hover)            */
+/* ------------------------------------------------------------------ */
+
+function CertCarousel({ certificates }: { certificates: Certificate[] }) {
+  const reduced = useReducedMotion();
+  const [perView, setPerView] = useState(3);
+  const [page, setPage] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  // jumlah kartu per slide mengikuti breakpoint biar pagination konsisten
+  useEffect(() => {
+    const getPerView = () => {
+      if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+      if (window.matchMedia("(min-width: 640px)").matches) return 2;
+      return 1;
+    };
+    const update = () => setPerView(getPerView());
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const slides: Certificate[][] = [];
+  for (let i = 0; i < certificates.length; i += perView) {
+    slides.push(certificates.slice(i, i + perView));
+  }
+  const pageCount = Math.max(slides.length, 1);
+  // turunan aman — page di-clamp saat perView berubah (resize)
+  const safePage = Math.min(page, pageCount - 1);
+
+  // auto-rotate tiap 4.5 detik; pause saat hover; off kalau reduced motion
+  useEffect(() => {
+    if (reduced || paused || pageCount <= 1) return;
+    const timer = setInterval(
+      () => setPage((p) => (Math.min(p, pageCount - 1) + 1) % pageCount),
+      4500,
+    );
+    return () => clearInterval(timer);
+  }, [reduced, paused, pageCount]);
+
+  return (
+    <div
+      className="mt-10"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-out motion-reduce:transition-none"
+          style={{ transform: `translateX(-${safePage * 100}%)` }}
+        >
+          {slides.map((group, i) => (
+            <div
+              key={i}
+              className="grid w-full shrink-0 grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+              aria-hidden={i !== safePage}
+              inert={i !== safePage}
+            >
+              {group.map((c) => (
+                <CertCard key={c.slug} cert={c} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {pageCount > 1 && (
+        <div className="mt-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                aria-current={i === safePage ? "true" : undefined}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300",
+                  i === safePage
+                    ? "w-6 bg-white"
+                    : "w-1.5 bg-neutral-700 hover:bg-neutral-500",
+                )}
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() =>
+                setPage((p) => (Math.min(p, pageCount - 1) - 1 + pageCount) % pageCount)
+              }
+              aria-label="Previous certificates"
+              className="rounded-md border border-neutral-800 bg-[#121212] p-2 text-neutral-400 transition-colors hover:border-neutral-600 hover:text-white"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() =>
+                setPage((p) => (Math.min(p, pageCount - 1) + 1) % pageCount)
+              }
+              aria-label="Next certificates"
+              className="rounded-md border border-neutral-800 bg-[#121212] p-2 text-neutral-400 transition-colors hover:border-neutral-600 hover:text-white"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function CertificatesSection({
   certificates,
 }: {
@@ -225,13 +345,9 @@ export function CertificatesSection({
         title="Sertifikat"
         hint={`[${certificates.length}]`}
       />
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {certificates.map((c, i) => (
-          <Reveal key={c.slug} delay={(i % 3) * 0.06} className="h-full">
-            <CertCard cert={c} />
-          </Reveal>
-        ))}
-      </div>
+      <Reveal delay={0.05}>
+        <CertCarousel certificates={certificates} />
+      </Reveal>
     </section>
   );
 }
