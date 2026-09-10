@@ -147,8 +147,12 @@ on conflict (slug) do nothing;
 
 -- =====================================================================
 -- SOP nambah project (dashboard Supabase):
---   1. Upload cover ke Storage → bucket 'portfolio' → projects/[slug]/cover.png
---   2. Insert row di table projects: slug kebab-case, title, tagline,
---      description, tech_stack, repo_url, featured (max 3 utk home), sort_order
---   3. status 'published' paling terakhir → tayang <= 1 jam (ISR 3600)
+--   1. Upload cover ke Storage → bucket 'portfolio' → projects/[slug]/cover.png,
+--      lalu copy public URL-nya (tombol Get URL / Copy URL).
+--   2. Insert row di table projects: slug kebab-case, title, tagline, description,
+--      tech_stack (array teks, mis. array['Node.js','Ink','WebSocket'] — ini yang
+--      tampil sebagai tag di kartu Karya), cover_url (public URL dari langkah 1),
+--      repo_url, featured (max 3 utk home), sort_order.
+--   3. status 'published' paling terakhir → tayang <= 1 jam (ISR 3600).
+--      Kalau cover_url kosong, kartu tetap tampil dengan placeholder monokrom.
 -- =====================================================================

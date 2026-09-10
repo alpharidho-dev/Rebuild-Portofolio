@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -66,13 +67,27 @@ export default async function ProjectPage({ params }: Props) {
           />
         </div>
 
-        <Reveal delay={0.05}>
-          <p className="mt-8 max-w-2xl text-sm leading-relaxed text-neutral-400">
+        {project.coverUrl && (
+          <Reveal delay={0.05}>
+            <div className="relative mt-8 aspect-[16/9] w-full max-w-3xl overflow-hidden rounded-xl border border-neutral-800 bg-[#0d0d0d]">
+              <Image
+                src={project.coverUrl}
+                alt={`${project.title} cover`}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+        )}
+
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-neutral-400">
             {project.tagline}
           </p>
         </Reveal>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.15}>
           <div className="mt-6 flex flex-wrap gap-2">
             {project.techStack.map((t) => (
               <span
@@ -86,7 +101,7 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <Reveal delay={0.2}>
           <div className="mt-10 max-w-2xl space-y-4">
             {project.description.split("\n\n").map((para, i) => (
               <p key={i} className="text-sm leading-relaxed text-neutral-300">
@@ -96,7 +111,7 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </Reveal>
 
-        <Reveal delay={0.2}>
+        <Reveal delay={0.25}>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             {project.repoUrl && (
               <a

@@ -1,11 +1,36 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Code2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { TechIcon } from "@/components/TechIcon";
 import type { Project } from "@/types/content";
+
+/**
+ * Cover proyek — full-bleed di atas kartu. Kalau coverUrl kosong
+ * (belum diisi di Supabase), tampilkan placeholder monokrom.
+ */
+function Cover({ project }: { project: Project }) {
+  return (
+    <div className="relative aspect-[16/10] overflow-hidden border-b border-neutral-800 bg-[#0d0d0d]">
+      {project.coverUrl ? (
+        <Image
+          src={project.coverUrl}
+          alt={`${project.title} cover`}
+          fill
+          sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Code2 className="h-8 w-8 text-neutral-700" />
+        </div>
+      )}
+    </div>
+  );
+}
 
 /**
  * Kartu proyek — dipakai di section Karya Terpilih (home) dan grid
@@ -24,30 +49,33 @@ export function ProjectCard({
         <motion.article
           whileHover={{ y: -5 }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          className="group flex h-full flex-col rounded-xl border border-neutral-800 bg-[#121212] p-6 transition-colors duration-300 hover:border-neutral-600"
+          className="group flex h-full flex-col overflow-hidden rounded-xl border border-neutral-800 bg-[#121212] transition-colors duration-300 hover:border-neutral-600"
         >
-          <div className="flex items-start justify-between">
-            <span className="text-xs text-neutral-600">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <ArrowUpRight className="h-4 w-4 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
-          </div>
-          <h3 className="mt-4 text-sm font-semibold text-white">
-            {project.title}
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-neutral-400">
-            {project.tagline}
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {project.techStack.map((t) => (
-              <span
-                key={t}
-                className="flex items-center gap-1.5 rounded border border-neutral-700/80 px-2 py-0.5 text-[10px] text-neutral-400"
-              >
-                <TechIcon name={t} className="h-3 w-3" />
-                {t}
+          <Cover project={project} />
+          <div className="flex flex-1 flex-col p-6">
+            <div className="flex items-start justify-between">
+              <span className="text-xs text-neutral-600">
+                {String(index + 1).padStart(2, "0")}
               </span>
-            ))}
+              <ArrowUpRight className="h-4 w-4 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+            </div>
+            <h3 className="mt-4 text-sm font-semibold text-white">
+              {project.title}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+              {project.tagline}
+            </p>
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
+              {project.techStack.map((t) => (
+                <span
+                  key={t}
+                  className="flex items-center gap-1.5 rounded border border-neutral-700/80 px-2 py-0.5 text-[10px] text-neutral-400"
+                >
+                  <TechIcon name={t} className="h-3 w-3" />
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.article>
       </Link>
