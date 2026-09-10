@@ -54,34 +54,17 @@ function MarqueeRow({
   );
 }
 
-function MarqueeGroup({
-  label,
-  items,
-  reverse = false,
-}: {
-  label: string;
-  items: TechItem[];
-  reverse?: boolean;
-}) {
-  return (
-    <div className="space-y-4">
-      <p className="text-xs text-neutral-500">{`// ${label}`}</p>
-      <MarqueeRow items={items} reverse={reverse} />
-    </div>
-  );
-}
-
 export function SkillsGrid() {
   const rowSkills = skills.filter((s) => s.category === "skills");
   const rowFrameworks = skills.filter((s) => s.category === "frameworks");
   const rowTools = skills.filter((s) => s.category === "tools");
 
   return (
-    /* 3 grup marquee tersebar merata mengisi tinggi section */
+    /* 3 baris marquee tersebar merata mengisi tinggi section */
     <div className="flex flex-1 flex-col justify-evenly gap-8">
-      <MarqueeGroup label="languages & core" items={rowSkills} />
-      <MarqueeGroup label="frameworks & ui" items={rowFrameworks} reverse />
-      <MarqueeGroup label="tools & infra" items={rowTools} />
+      <MarqueeRow items={rowSkills} />
+      <MarqueeRow items={rowFrameworks} reverse />
+      <MarqueeRow items={rowTools} />
     </div>
   );
 }
