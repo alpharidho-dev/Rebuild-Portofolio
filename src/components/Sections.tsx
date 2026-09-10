@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Award, Check, Copy, Mail } from "lucide-react";
@@ -177,19 +178,37 @@ function CertCard({ cert }: { cert: Certificate }) {
       href={cert.credentialUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full flex-col rounded-xl border border-neutral-800 bg-[#121212] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-neutral-600 hover:bg-[#161616]"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-neutral-800 bg-[#121212] transition-all duration-300 hover:-translate-y-0.5 hover:border-neutral-600 hover:bg-[#161616]"
     >
-      <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1.5 text-[10px] text-neutral-500 transition-colors duration-300 group-hover:text-neutral-300">
-          <Award className="h-3.5 w-3.5 text-neutral-500 transition-colors duration-300 group-hover:text-white" />
-          {cert.issuer}
-        </span>
-        <ArrowUpRight className="h-3.5 w-3.5 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+      {/* cover sertifikat — placeholder monokrom kalau image_url kosong */}
+      <div className="relative aspect-[16/10] overflow-hidden border-b border-neutral-800 bg-[#0d0d0d]">
+        {cert.imageUrl ? (
+          <Image
+            src={cert.imageUrl}
+            alt={`${cert.title} certificate`}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Award className="h-8 w-8 text-neutral-700" />
+          </div>
+        )}
       </div>
-      <p className="mt-3 text-sm font-semibold leading-snug text-white">
-        {cert.title}
-      </p>
-      <p className="mt-auto pt-4 text-[10px] text-neutral-500">{cert.year}</p>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-center justify-between">
+          <span className="flex items-center gap-1.5 text-[10px] text-neutral-500 transition-colors duration-300 group-hover:text-neutral-300">
+            <Award className="h-3.5 w-3.5 text-neutral-500 transition-colors duration-300 group-hover:text-white" />
+            {cert.issuer}
+          </span>
+          <ArrowUpRight className="h-3.5 w-3.5 text-neutral-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+        </div>
+        <p className="mt-3 text-sm font-semibold leading-snug text-white">
+          {cert.title}
+        </p>
+        <p className="mt-auto pt-4 text-[10px] text-neutral-500">{cert.year}</p>
+      </div>
     </a>
   );
 }

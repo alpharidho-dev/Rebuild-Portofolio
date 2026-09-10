@@ -155,4 +155,13 @@ on conflict (slug) do nothing;
 --      repo_url, featured (max 3 utk home), sort_order.
 --   3. status 'published' paling terakhir → tayang <= 1 jam (ISR 3600).
 --      Kalau cover_url kosong, kartu tetap tampil dengan placeholder monokrom.
+--
+-- SOP nambah sertifikat:
+--   1. Upload gambar ke Storage → bucket 'portfolio' → certificates/[slug].png,
+--      lalu copy public URL-nya.
+--   2. Insert row di table certificates: slug kebab-case, title, issuer, year,
+--      credential_url (link verifikasi), image_url (public URL dari langkah 1),
+--      featured (4-6 utk home), sort_order.
+--   3. status 'published' paling terakhir. Kalau image_url kosong, kartu tetap
+--      tampil dengan placeholder monokrom.
 -- =====================================================================
