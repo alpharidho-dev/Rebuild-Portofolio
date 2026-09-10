@@ -5,6 +5,7 @@ import type { NavItem } from "@/types/content";
  * jadi nambah/mengubah menu tidak perlu edit komponen.
  */
 export const mainNav: NavItem[] = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Karya", href: "/karya" },
   { label: "Lab", href: "/lab" },

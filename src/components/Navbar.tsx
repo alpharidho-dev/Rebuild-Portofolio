@@ -20,7 +20,7 @@ export function Navbar() {
           Alpharidho
         </Link>
 
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 md:flex">
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {mainNav.map((link) => (
             <Link
               key={link.href}
