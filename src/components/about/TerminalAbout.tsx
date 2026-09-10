@@ -11,19 +11,19 @@ import { cn } from "@/lib/utils";
 /* ------------------------------------------------------------------ */
 
 const Kw = ({ children }: { children: ReactNode }) => (
-  <span className="font-medium text-white">{children}</span>
+  <span className="text-fuchsia-400">{children}</span>
 );
 const Str = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-400">{children}</span>
+  <span className="text-green-400">{children}</span>
 );
 const Prop = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-500">{children}</span>
+  <span className="text-cyan-300">{children}</span>
 );
 const Fn = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-300">{children}</span>
+  <span className="text-yellow-300">{children}</span>
 );
 const Pu = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-600">{children}</span>
+  <span className="text-neutral-500">{children}</span>
 );
 const Id = ({ children }: { children: ReactNode }) => (
   <span className="text-neutral-200">{children}</span>
@@ -116,9 +116,9 @@ function CodeEditor() {
         {/* title bar */}
         <div className="flex items-center justify-between border-b border-neutral-800/80 px-5 py-3.5">
           <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-neutral-600" />
-            <span className="h-3 w-3 rounded-full bg-neutral-500" />
-            <span className="h-3 w-3 rounded-full bg-neutral-400" />
+            <span className="h-3 w-3 rounded-full bg-[#ff5f56]" />
+            <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
+            <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
           </div>
           <span className="text-xs text-neutral-500">About.ts</span>
         </div>
@@ -232,12 +232,12 @@ function MemUsageCard() {
     <Reveal delay={0.1}>
       <div
         ref={ref}
-        className="flex h-full flex-col rounded-xl border border-neutral-700 bg-[#0d0d0d] p-6 shadow-xl shadow-black/40"
+        className="flex h-full flex-col rounded-xl border border-cyan-400/80 bg-[#0d0d0d] p-6 shadow-[0_0_28px_rgba(34,211,238,0.22)]"
       >
-        <p className="text-xs tracking-widest text-neutral-500">MEM_USAGE</p>
+        <p className="text-xs tracking-widest text-neutral-400">MEM_USAGE</p>
         <p className="mt-2 text-4xl font-bold text-white">
           {displayed}
-          <span className="ml-1 text-lg font-semibold text-neutral-400">%</span>
+          <span className="ml-1 text-lg font-semibold text-cyan-400">%</span>
         </p>
         <div className="mt-auto flex h-24 items-end gap-2 pt-6">
           {BARS.map((h, i) => (
@@ -246,8 +246,8 @@ function MemUsageCard() {
               className={cn(
                 "flex-1 rounded-sm transition-all duration-500",
                 i === highlight
-                  ? "bg-neutral-300 shadow-[0_0_16px_rgba(255,255,255,0.28)]"
-                  : "bg-neutral-700/80",
+                  ? "bg-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.8)]"
+                  : "bg-teal-700/80",
               )}
               style={{ height: `${h}%` }}
             />
@@ -333,9 +333,9 @@ function TtyCard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
               className={cn(
-                line.tone === "status" && "font-semibold text-neutral-100",
-                line.tone === "bright" && "text-neutral-200",
-                line.tone === "dim" && "text-neutral-500",
+                line.tone === "status" && "text-cyan-300",
+                line.tone === "bright" && "text-green-400",
+                line.tone === "dim" && "text-green-500/80",
               )}
             >
               <span className="mr-2 opacity-70">&gt;</span>
@@ -343,7 +343,7 @@ function TtyCard() {
             </motion.p>
           ))}
         </div>
-        <div className="mt-4 border-t border-neutral-800 pt-3 text-xs text-neutral-300">
+        <div className="mt-4 border-t border-neutral-800 pt-3 text-xs text-green-400">
           <span className="mr-2 opacity-70">&gt;</span>
           root@dev-sys:~# <span className="animate-blink">_</span>
         </div>
