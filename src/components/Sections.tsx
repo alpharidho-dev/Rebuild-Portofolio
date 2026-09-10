@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Award, Check, Copy, Mail } from "lucide-react";
 import { useState, type ComponentType } from "react";
 import { Reveal } from "@/components/Reveal";
+import { TerminalAbout } from "@/components/about/TerminalAbout";
 import { GithubIcon, InstagramIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/karya/ProjectCard";
 import { SkillsGrid } from "@/components/skills/SkillsGrid";
@@ -107,56 +108,8 @@ export function AboutSection() {
   return (
     <section id="about" className={SECTION_WRAP}>
       <SectionHeader index="01 · whoami" title="About" hint="[student]" />
-      <div className="mt-10 grid gap-10 md:grid-cols-[1.3fr_1fr]">
-        <Reveal delay={0.05}>
-          <p className="text-sm leading-relaxed text-neutral-400">
-            I&apos;m {siteConfig.name} — a {siteConfig.role.toLowerCase()}{" "}
-            building full-stack web apps with React, Next.js, TypeScript and
-            MySQL. I write type-safe frontends, craft clean API routes and keep
-            my database queries efficient — all while balancing high school
-            classes.
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-neutral-400">
-            Right now I&apos;m diving deeper into Next.js Server Actions and
-            looking for an internship to bring my skills to a real-world team.
-            Let&apos;s build something impactful together.
-          </p>
-          <div className="mt-8 flex items-center gap-3">
-            <SocialLinks />
-            <Link
-              href="/about"
-              className="ml-2 rounded-md border border-neutral-800 bg-[#121212] px-4 py-2.5 text-xs text-neutral-300 transition-colors hover:border-neutral-600 hover:text-white"
-            >
-              full story →
-            </Link>
-          </div>
-        </Reveal>
-        <Reveal delay={0.15}>
-          <div className="rounded-xl border border-neutral-800 bg-[#121212] p-6">
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-4 text-xs text-neutral-500">
-              <span>status</span>
-              <span className="flex items-center gap-2 text-neutral-300">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-neutral-400 opacity-60" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
-                </span>
-                {siteConfig.status}
-              </span>
-            </div>
-            <div className="mt-4 flex items-center justify-between text-xs text-neutral-500">
-              <span>location</span>
-              <span className="text-neutral-300">{siteConfig.location}</span>
-            </div>
-            <div className="mt-3 flex items-center justify-between border-t border-neutral-800 pt-3 text-xs text-neutral-500">
-              <span>school</span>
-              <span className="text-neutral-300">SMK Taruna Bhakti · XI RPL 4</span>
-            </div>
-            <div className="mt-3 flex items-center justify-between border-t border-neutral-800 pt-3 text-xs text-neutral-500">
-              <span>stack</span>
-              <span className="text-neutral-300">React · Next.js · TS</span>
-            </div>
-          </div>
-        </Reveal>
+      <div className="mt-10">
+        <TerminalAbout />
       </div>
     </section>
   );
