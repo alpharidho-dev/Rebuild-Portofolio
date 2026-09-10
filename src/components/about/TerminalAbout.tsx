@@ -133,7 +133,10 @@ function CodeEditor() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: i * 0.07, ease: EASE_OUT }}
-              className="flex gap-5"
+              className={cn(
+                "-mx-1 flex gap-5 rounded-sm px-1",
+                i === CODE_LINES.length - 1 && "bg-neutral-800/40",
+              )}
             >
               <span className="w-5 shrink-0 select-none text-right text-neutral-700">
                 {i + 1}
@@ -143,6 +146,18 @@ function CodeEditor() {
               </span>
             </motion.div>
           ))}
+        </div>
+        {/* status bar ala editor — biar terasa seperti editor beneran */}
+        <div className="flex items-center justify-between border-t border-neutral-800/80 px-5 py-2 text-[10px] text-neutral-500">
+          <span>{`Ln ${CODE_LINES.length}, Col 19`}</span>
+          <span className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+              no issues
+            </span>
+            <span>TypeScript</span>
+            <span>UTF-8</span>
+          </span>
         </div>
       </div>
     </Reveal>
@@ -171,7 +186,7 @@ function PhotoCollage() {
           alt="Alpharidho sitting with a mountain view"
           fill
           sizes="(min-width: 768px) 120px, 100vw"
-          className="object-cover"
+          className="object-cover transition-transform duration-700 hover:scale-[1.04]"
         />
       </div>
 
@@ -192,7 +207,7 @@ function PhotoCollage() {
               alt="Alpharidho sitting with a mountain view"
               fill
               sizes="120px"
-              className="object-cover"
+              className="object-cover transition-transform duration-700 hover:scale-[1.04]"
             />
           </motion.div>
         ))}
