@@ -178,7 +178,7 @@ const STRIPS = [
 
 function PhotoCollage() {
   return (
-    <div className="shrink-0">
+    <div className="shrink-0 -ml-5">
       {/* mobile: single full photo */}
       <div className="relative h-80 overflow-hidden rounded-xl border border-neutral-700/60 md:hidden">
         <Image
