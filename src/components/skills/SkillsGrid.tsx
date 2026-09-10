@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import type { TechItem } from "@/types/content";
 
 /* ------------------------------------------------------------------ */
-/* SkillsGrid — marquee ganda: baris 1 jalan ke kiri (skills +        */
-/* frameworks), baris 2 jalan ke kanan (tools). Pause saat hover,      */
+/* SkillsGrid — marquee 3 baris: skills, frameworks, tools.           */
+/* Baris tengah jalan ke kanan, sisanya ke kiri. Pause saat hover,     */
 /* reduced-motion → grid statis.                                       */
 /* ------------------------------------------------------------------ */
 
@@ -50,13 +50,15 @@ function MarqueeRow({
 }
 
 export function SkillsGrid() {
-  const rowLeft = skills.filter((s) => s.category !== "tools");
-  const rowRight = skills.filter((s) => s.category === "tools");
+  const rowSkills = skills.filter((s) => s.category === "skills");
+  const rowFrameworks = skills.filter((s) => s.category === "frameworks");
+  const rowTools = skills.filter((s) => s.category === "tools");
 
   return (
     <div className="space-y-4">
-      <MarqueeRow items={rowLeft} />
-      <MarqueeRow items={rowRight} reverse />
+      <MarqueeRow items={rowSkills} />
+      <MarqueeRow items={rowFrameworks} reverse />
+      <MarqueeRow items={rowTools} />
     </div>
   );
 }
