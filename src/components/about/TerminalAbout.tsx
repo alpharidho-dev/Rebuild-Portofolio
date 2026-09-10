@@ -7,23 +7,23 @@ import { EASE_OUT, Reveal } from "@/components/Reveal";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
-/* syntax token helpers — monokrom, selaras tema situs                 */
+/* syntax token helpers — netral + aksen hijau terminal                */
 /* ------------------------------------------------------------------ */
 
 const Kw = ({ children }: { children: ReactNode }) => (
-  <span className="font-medium text-white">{children}</span>
+  <span className="font-medium text-green-400">{children}</span>
 );
 const Str = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-400">{children}</span>
-);
-const Prop = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-500">{children}</span>
-);
-const Fn = ({ children }: { children: ReactNode }) => (
   <span className="text-neutral-300">{children}</span>
 );
+const Prop = ({ children }: { children: ReactNode }) => (
+  <span className="text-neutral-400">{children}</span>
+);
+const Fn = ({ children }: { children: ReactNode }) => (
+  <span className="font-medium text-white">{children}</span>
+);
 const Pu = ({ children }: { children: ReactNode }) => (
-  <span className="text-neutral-600">{children}</span>
+  <span className="text-neutral-500">{children}</span>
 );
 const Id = ({ children }: { children: ReactNode }) => (
   <span className="text-neutral-200">{children}</span>
@@ -105,7 +105,9 @@ const CODE_LINES: ReactNode[] = [
   <>&nbsp;</>,
   <>
     <Kw>await</Kw> <Fn>introduce</Fn>
-    <Pu>();</Pu>
+    <Pu>();</Pu>{" "}
+    {/* kursor terminal berkedip — aksen hijau */}
+    <span className="inline-block h-[1.05em] w-2 translate-y-[0.15em] animate-blink bg-green-400" />
   </>,
 ];
 
@@ -116,9 +118,9 @@ function CodeEditor() {
         {/* title bar */}
         <div className="flex items-center justify-between border-b border-neutral-800/80 px-5 py-3.5">
           <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-neutral-600" />
-            <span className="h-3 w-3 rounded-full bg-neutral-500" />
-            <span className="h-3 w-3 rounded-full bg-neutral-400" />
+            <span className="h-3 w-3 rounded-full bg-[#ff5f56]" />
+            <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
+            <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
           </div>
           <span className="text-xs text-neutral-500">About.ts</span>
         </div>
@@ -200,7 +202,7 @@ function PhotoCollage() {
 }
 
 /* ------------------------------------------------------------------ */
-/* composition — terminal editor monokrom + foto belah 3               */
+/* composition — terminal editor (aksen hijau) + foto belah 3          */
 /* ------------------------------------------------------------------ */
 
 export function TerminalAbout() {
