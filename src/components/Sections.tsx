@@ -51,9 +51,9 @@ function SectionHeader({
 }
 
 /* padding nyambung sama halaman sub-route (about/lab/stats) */
-/* section = satu layar penuh + snap-start, konten di tengah vertikal */
+/* section = satu layar penuh, konten di tengah vertikal */
 const SECTION_WRAP =
-  "relative flex min-h-svh flex-col justify-center px-5 py-24 snap-start md:pl-[255px] md:pr-10";
+  "relative flex min-h-svh flex-col justify-center px-5 py-24 md:pl-[255px] md:pr-10";
 
 const SOCIAL_ICONS: Record<string, ComponentType<{ className?: string }>> = {
   GitHub: GithubIcon,
@@ -423,7 +423,7 @@ export function ContactSection() {
 
 export function Footer() {
   return (
-    <footer className="flex flex-col items-center justify-between gap-2 border-t border-neutral-800/70 px-6 py-8 text-[11px] text-neutral-600 snap-end md:flex-row md:px-12">
+    <footer className="flex flex-col items-center justify-between gap-2 border-t border-neutral-800/70 px-6 py-8 text-[11px] text-neutral-600 md:flex-row md:px-12">
       <span>
         © 2026 {siteConfig.name} · {siteConfig.handle}
       </span>

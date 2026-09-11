@@ -6,10 +6,8 @@
 }
 
 html {
+  /* scroll bebas + halus ke anchor section (#about, #work, dst.) */
   scroll-behavior: smooth;
-  /* tiap section home = satu layar penuh, snap biar nggak ada
-     potongan section yang kelihatan saat scroll */
-  scroll-snap-type: y mandatory;
 }
 
 body {

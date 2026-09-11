@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-end justify-center overflow-hidden snap-start"
+      className="relative flex min-h-screen items-end justify-center overflow-hidden"
     >
       <BinaryRain />
 
