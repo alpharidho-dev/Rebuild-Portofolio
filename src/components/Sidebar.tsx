@@ -29,13 +29,6 @@ const ITEMS: NavItem[] = [
   { href: "/statistics", label: "Stats", Icon: Settings },
 ];
 
-// --- Props untuk Sidebar (sudah kamu buat, sekarang kita pakai) ---
-interface Props {
-  active?: string;
-  expanded?: boolean;
-  collapsed?: boolean;
-}
-
 // --- Komponen NavList (yang tadinya kosong, sekarang diisi) ---
 function NavList() {
   const pathname = usePathname();
@@ -73,9 +66,8 @@ function NavList() {
 }
 
 // --- KOMPONEN UTAMA SIDEBAR ---
-export function Sidebar({ expanded = false }: Props) {
-  // Tentukan lebar berdasarkan props
-  const width = expanded ? 200 : 56; // 56px = w-14, 200px = expanded
+export function Sidebar() {
+  const width = 56; // 56px = w-14 (sidebar selalu compact)
 
   return (
     <motion.aside
@@ -92,7 +84,7 @@ export function Sidebar({ expanded = false }: Props) {
         ease: "easeOut",
       }}
       whileHover={{                              // ✅ Efek hover (opsional)
-        width: expanded ? 200 : 64,             // Melebar sedikit saat hover
+        width: 64,                              // Melebar sedikit saat hover
         transition: { duration: 0.1 },
       }}
     >

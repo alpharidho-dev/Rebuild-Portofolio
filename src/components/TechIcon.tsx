@@ -32,13 +32,13 @@ import {
   siVercel,
   siVitest,
 } from "simple-icons";
-import { Cloud, Code2, type LucideIcon } from "lucide-react";
+import { Cloud, type LucideIcon } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /* TechIcon — logo brand asli per teknologi (via simple-icons).        */
 /* Map key harus sama persis dengan nama di config/skills.ts dan       */
 /* config/projects.ts (field techStack). Yang nggak ada di map         */
-/* (mis. WebSocket, CLI) tidak dirender icon, kecuali fallback=true.   */
+/* (mis. WebSocket, CLI) tidak dirender icon sama sekali.               */
 /* ------------------------------------------------------------------ */
 
 type IconSource = string | LucideIcon;
@@ -96,11 +96,9 @@ function BrandIcon({ path, className }: { path: string; className?: string }) {
 export function TechIcon({
   name,
   className,
-  fallback = false,
 }: {
   name: string;
   className?: string;
-  fallback?: boolean;
 }) {
   const source = TECH_ICONS[name];
 
@@ -113,6 +111,5 @@ export function TechIcon({
     return <Lucide className={className} />;
   }
 
-  if (fallback) return <Code2 className={className} />;
   return null;
 }
