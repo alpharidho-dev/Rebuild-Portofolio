@@ -8,6 +8,7 @@ import {
   ProjectsSection,
   StackSection,
 } from "@/components/Sections";
+import { WebGLDepth } from "@/components/WebGLDepth";
 import { getFeaturedCertificates } from "@/lib/data/certificates";
 import { getFeaturedProjects } from "@/lib/data/projects";
 
@@ -28,13 +29,17 @@ export default async function Home() {
 
   return (
     <>
-      <Hero />
-      <AboutSection />
-      <StackSection />
-      <ProjectsSection projects={featuredProjects} />
-      <CertificatesSection certificates={featuredCertificates} />
-      <ContactSection />
-      <Footer />
+      {/* latar 3D fixed di belakang konten — lihat components/WebGLDepth */}
+      <WebGLDepth />
+      <div className="relative z-10">
+        <Hero />
+        <AboutSection />
+        <StackSection />
+        <ProjectsSection projects={featuredProjects} />
+        <CertificatesSection certificates={featuredCertificates} />
+        <ContactSection />
+        <Footer />
+      </div>
     </>
   );
 }

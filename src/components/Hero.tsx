@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { BinaryRain } from "@/components/BinaryRain";
 import { EASE_OUT } from "@/components/Reveal";
 import { ScrollStage } from "@/components/ScrollStage";
 
@@ -14,7 +13,7 @@ export function Hero() {
       id="home"
       className="relative flex min-h-screen items-end justify-center overflow-hidden"
     >
-      <BinaryRain />
+      {/* hujan biner sekarang dari latar WebGL (components/WebGLDepth) */}
 
       {/* guitarist, anchored to the bottom edge and melting into black */}
       <motion.div
