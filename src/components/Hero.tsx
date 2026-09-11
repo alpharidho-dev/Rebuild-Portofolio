@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { BinaryRain } from "@/components/BinaryRain";
 import { EASE_OUT } from "@/components/Reveal";
+import { ScrollStage } from "@/components/ScrollStage";
 
 export function Hero() {
   return (
-    <section
+    <ScrollStage
+      as="section"
       id="home"
       className="relative flex min-h-screen items-end justify-center overflow-hidden"
     >
@@ -50,6 +52,6 @@ export function Hero() {
           </motion.span>
         </motion.a>
       </div>
-    </section>
+    </ScrollStage>
   );
 }

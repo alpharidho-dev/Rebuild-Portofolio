@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { BinaryRain } from "@/components/BinaryRain";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
+import { ScrollStage } from "@/components/ScrollStage";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
@@ -77,7 +78,11 @@ export function LabContent() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <BinaryRain />
-      <main className="relative z-10 px-5 pb-28 pt-47 md:pb-16 md:pl-[255px] md:pr-10">
+      <ScrollStage
+        as="main"
+        variant="page"
+        className="relative z-10 px-5 pb-28 pt-47 md:pb-16 md:pl-[255px] md:pr-10"
+      >
         <PageHeader index="03 · experiments" title="Lab" hint="[04]" />
 
         {/* terminal prompt line */}
@@ -187,7 +192,7 @@ export function LabContent() {
             </p>
           </div>
         </Reveal>
-      </main>
+      </ScrollStage>
     </div>
   );
 }

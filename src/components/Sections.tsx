@@ -15,6 +15,7 @@ import {
 import { useEffect, useState, type ComponentType } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/Reveal";
+import { ScrollStage } from "@/components/ScrollStage";
 import { TerminalAbout } from "@/components/about/TerminalAbout";
 import { GithubIcon, InstagramIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/karya/ProjectCard";
@@ -118,12 +119,12 @@ function CopyEmail() {
 
 export function AboutSection() {
   return (
-    <section id="about" className={SECTION_WRAP}>
+    <ScrollStage as="section" id="about" className={SECTION_WRAP}>
       <SectionHeader index="01 · whoami" title="About" hint="[student]" />
       <div className="mt-10">
         <TerminalAbout />
       </div>
-    </section>
+    </ScrollStage>
   );
 }
 
@@ -133,7 +134,7 @@ export function AboutSection() {
 
 export function StackSection() {
   return (
-    <section id="stack" className={SECTION_WRAP}>
+    <ScrollStage as="section" id="stack" className={SECTION_WRAP}>
       <SectionHeader
         index="02 · daily drivers"
         title="Stack"
@@ -143,7 +144,7 @@ export function StackSection() {
       <div className="mt-10 flex min-h-0 flex-1 flex-col">
         <SkillsGrid />
       </div>
-    </section>
+    </ScrollStage>
   );
 }
 
@@ -153,7 +154,7 @@ export function StackSection() {
 
 export function ProjectsSection({ projects }: { projects: Project[] }) {
   return (
-    <section id="work" className={SECTION_WRAP}>
+    <ScrollStage as="section" id="work" className={SECTION_WRAP}>
       <SectionHeader
         index="03 · selected work"
         title="Karya"
@@ -173,7 +174,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
           <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </Link>
       </Reveal>
-    </section>
+    </ScrollStage>
   );
 }
 
@@ -339,7 +340,7 @@ export function CertificatesSection({
   certificates: Certificate[];
 }) {
   return (
-    <section id="certificates" className={SECTION_WRAP}>
+    <ScrollStage as="section" id="certificates" className={SECTION_WRAP}>
       <SectionHeader
         index="04 · credentials"
         title="Sertifikat"
@@ -348,7 +349,7 @@ export function CertificatesSection({
       <Reveal delay={0.05}>
         <CertCarousel certificates={certificates} />
       </Reveal>
-    </section>
+    </ScrollStage>
   );
 }
 
@@ -358,7 +359,7 @@ export function CertificatesSection({
 
 export function ContactSection() {
   return (
-    <section id="connect" className={SECTION_WRAP}>
+    <ScrollStage as="section" id="connect" className={SECTION_WRAP}>
       <SectionHeader index="05 · say hello" title="Connect" hint="[open]" />
       <div className="mt-10 grid gap-10 md:grid-cols-[1.2fr_1fr]">
         <Reveal delay={0.05}>
@@ -413,7 +414,7 @@ export function ContactSection() {
           </div>
         </Reveal>
       </div>
-    </section>
+    </ScrollStage>
   );
 }
 

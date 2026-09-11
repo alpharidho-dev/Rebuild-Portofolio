@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BinaryRain } from "@/components/BinaryRain";
 import { PageHeader } from "@/components/PageHeader";
 import { ProjectCard } from "@/components/karya/ProjectCard";
+import { ScrollStage } from "@/components/ScrollStage";
 import { getPublishedProjects } from "@/lib/data/projects";
 
 export const metadata: Metadata = {
@@ -19,7 +20,11 @@ export default async function KaryaPage() {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <BinaryRain />
-      <main className="relative z-10 px-5 pb-28 pt-47 md:pb-16 md:pl-[255px] md:pr-10">
+      <ScrollStage
+        as="main"
+        variant="page"
+        className="relative z-10 px-5 pb-28 pt-47 md:pb-16 md:pl-[255px] md:pr-10"
+      >
         <PageHeader
           index="02 · portofolio"
           title="Karya"
@@ -30,7 +35,7 @@ export default async function KaryaPage() {
             <ProjectCard key={p.slug} project={p} index={i} />
           ))}
         </div>
-      </main>
+      </ScrollStage>
     </div>
   );
 }
