@@ -27,12 +27,6 @@ export interface NavItem {
   href: string;
 }
 
-/** Section homepage untuk sub-nav (scroll-spy). */
-export interface HomeSection {
-  id: string;
-  label: string;
-}
-
 export type TechCategory = "skills" | "frameworks" | "tools";
 
 export interface TechItem {

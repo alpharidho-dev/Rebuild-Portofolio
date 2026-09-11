@@ -80,10 +80,6 @@ const TECH_ICONS: Record<string, IconSource> = {
   AWS: Cloud, // icon AWS sudah dihapus dari simple-icons
 };
 
-export function hasTechIcon(name: string): boolean {
-  return name in TECH_ICONS;
-}
-
 function BrandIcon({ path, className }: { path: string; className?: string }) {
   return (
     <svg
